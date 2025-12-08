@@ -19,7 +19,7 @@ struct UserAvatar: View {
     }
 
     var body: some View {
-        Group {
+        ZStack {
             if let photoURL = photoURL, let url = URL(string: photoURL) {
                 AsyncImage(url: url) { image in
                     image

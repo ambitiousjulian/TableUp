@@ -13,7 +13,7 @@ struct RootView: View {
     @State private var isProfileSetupComplete = false
 
     var body: some View {
-        Group {
+        ZStack {
             if authService.isAuthenticated {
                 if isProfileSetupComplete {
                     MainTabView()
@@ -40,10 +40,11 @@ struct AuthenticationFlowView: View {
     @StateObject private var viewModel = AuthViewModel()
 
     var body: some View {
-        Group {
+        ZStack {
             switch viewModel.authState {
             case .signedOut:
                 SignInView()
+                    .environmentObject(viewModel)
             case .verifyingPhone:
                 PhoneAuthView(viewModel: viewModel)
             case .settingUpProfile:
@@ -52,6 +53,5 @@ struct AuthenticationFlowView: View {
                 MainTabView()
             }
         }
-        .environmentObject(viewModel)
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignInView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel: AuthViewModel  // Changed from @StateObject
 
     var body: some View {
         ZStack {
@@ -38,9 +38,14 @@ struct SignInView: View {
                             .foregroundColor(.textSecondary)
                             .padding(.leading, 16)
 
-                        TextField("(555) 123-4567", text: $viewModel.phoneNumber)
+                        TextField("9549999999", text: $viewModel.phoneNumber)
                             .keyboardType(.phonePad)
                             .foregroundColor(.textPrimary)
+                            .onChange(of: viewModel.phoneNumber) { newValue in
+                                // Keep only numbers, max 10 digits
+                                let filtered = newValue.filter { $0.isNumber }
+                                viewModel.phoneNumber = String(filtered.prefix(10))
+                            }
                     }
                     .frame(height: 56)
                     .background(Color.backgroundCard)
@@ -56,7 +61,7 @@ struct SignInView: View {
                         }
                     },
                     isLoading: viewModel.isLoading,
-                    isDisabled: viewModel.phoneNumber.isEmpty
+                    isDisabled: viewModel.phoneNumber.count != 10
                 )
 
                 // Error message

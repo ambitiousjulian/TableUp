@@ -20,6 +20,10 @@ class AuthService: ObservableObject {
 
     private init() {
         setupAuthStateListener()
+        // DEVELOPMENT ONLY: Remove this line when APNs is configured
+        #if DEBUG
+        Auth.auth().settings?.isAppVerificationDisabledForTesting = true
+        #endif
     }
 
     func setupAuthStateListener() {
@@ -33,10 +37,19 @@ class AuthService: ObservableObject {
 
     // MARK: - Phone Authentication
     func verifyPhoneNumber(_ phoneNumber: String) async throws -> String {
-        return try await PhoneAuthProvider.provider().verifyPhoneNumber(
-            phoneNumber,
-            uiDelegate: nil
-        )
+        return try await withCheckedThrowingContinuation { continuation in
+            PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { verificationID, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                guard let verificationID = verificationID else {
+                    continuation.resume(throwing: NSError(domain: "AuthService", code: -1, userInfo: [NSLocalizedDescriptionKey: "No verification ID received"]))
+                    return
+                }
+                continuation.resume(returning: verificationID)
+            }
+        }
     }
 
     func signInWithPhone(verificationID: String, verificationCode: String) async throws -> FirebaseAuth.User {

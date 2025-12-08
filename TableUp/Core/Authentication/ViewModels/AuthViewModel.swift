@@ -44,7 +44,9 @@ class AuthViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            verificationID = try await authService.verifyPhoneNumber(phoneNumber)
+            // Format phone number with +1 prefix
+            let formattedNumber = "+1\(phoneNumber)"
+            verificationID = try await authService.verifyPhoneNumber(formattedNumber)
             authState = .verifyingPhone
         } catch {
             errorMessage = error.localizedDescription
