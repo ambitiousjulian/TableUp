@@ -1,24 +1,32 @@
-//
-//  ContentView.swift
-//  TableUp
-//
-//  Created by Julian  on 12/7/25.
-//
-
+// ContentView.swift
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+        TabView {
+            MapScreen()
+                .tabItem {
+                    Image(systemName: "map")
+                    Text("Map")
+                }
 
-#Preview {
-    ContentView()
+            MeetsScreen()
+                .tabItem {
+                    Image(systemName: "person.3.sequence")
+                    Text("Meets")
+                }
+
+            GroupsScreen()
+                .tabItem {
+                    Image(systemName: "person.2.circle")
+                    Text("Groups")
+                }
+
+            ProfileScreen()
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Profile")
+                }
+        }
+    }
 }

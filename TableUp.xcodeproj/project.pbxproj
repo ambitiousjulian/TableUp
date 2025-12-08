@@ -51,6 +51,10 @@
 		B9D92C632EE6728E00E5CC65 /* TableUp */ = {
 			isa = PBXGroup;
 			children = (
+				B9D92C752EE672CC00E5CC65 /* Data */,
+				B9D92C742EE672C500E5CC65 /* Components */,
+				B9D92C732EE672BB00E5CC65 /* Screens */,
+				B9D92C722EE672B100E5CC65 /* Models */,
 				B9D92C642EE6728E00E5CC65 /* TableUpApp.swift */,
 				B9D92C662EE6728E00E5CC65 /* ContentView.swift */,
 				B9D92C682EE6728F00E5CC65 /* Assets.xcassets */,
@@ -65,6 +69,34 @@
 				B9D92C6B2EE6728F00E5CC65 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B9D92C722EE672B100E5CC65 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B9D92C732EE672BB00E5CC65 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		B9D92C742EE672C500E5CC65 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		B9D92C752EE672CC00E5CC65 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
