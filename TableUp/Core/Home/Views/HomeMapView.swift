@@ -13,7 +13,8 @@ struct HomeMapView: View {
     @State private var showCreateMeet = false
 
     var body: some View {
-        ZStack {
+        NavigationView {
+            ZStack {
             // Map
             Map(coordinateRegion: $viewModel.region, annotationItems: viewModel.meets) { meet in
                 MapAnnotation(coordinate: meet.coordinate) {
@@ -74,9 +75,11 @@ struct HomeMapView: View {
                 await viewModel.loadNearbyMeets()
             }
         }
-        .sheet(isPresented: $showCreateMeet) {
-            CreateMeetView()
+            .sheet(isPresented: $showCreateMeet) {
+                CreateMeetView()
+            }
         }
+        .navigationViewStyle(.stack)
     }
 }
 
@@ -102,6 +105,16 @@ struct MeetMapAnnotation: View {
     let meet: Meet
 
     var body: some View {
+        if let meetId = meet.id {
+            NavigationLink(destination: MeetDetailView(meetId: meetId)) {
+                annotationContent
+            }
+        } else {
+            annotationContent
+        }
+    }
+
+    private var annotationContent: some View {
         VStack(spacing: 4) {
             ZStack {
                 Circle()

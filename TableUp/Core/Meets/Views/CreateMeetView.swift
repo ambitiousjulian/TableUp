@@ -11,6 +11,7 @@ struct CreateMeetView: View {
     @StateObject private var viewModel = CreateMeetViewModel()
     @Environment(\.dismiss) var dismiss
     @State private var showImagePicker = false
+    @State private var showLocationSearch = false
 
     var body: some View {
         NavigationView {
@@ -50,12 +51,29 @@ struct CreateMeetView: View {
                             Text("Location")
                                 .bodyStyle()
 
-                            TextField("Where is this happening?", text: $viewModel.locationName)
-                                .foregroundColor(.textPrimary)
+                            Button(action: { showLocationSearch = true }) {
+                                HStack {
+                                    if viewModel.locationName.isEmpty {
+                                        Text("Select location...")
+                                            .foregroundColor(.textSecondary)
+                                    } else {
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text(viewModel.locationName)
+                                                .foregroundColor(.textPrimary)
+                                                .lineLimit(2)
+                                                .multilineTextAlignment(.leading)
+                                        }
+                                    }
+                                    Spacer()
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundColor(.primaryPurple)
+                                }
                                 .padding()
-                                .frame(height: 56)
+                                .frame(minHeight: 56)
                                 .background(Color.backgroundCard)
                                 .cornerRadius(16)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
 
                         // Date & Time
@@ -152,6 +170,12 @@ struct CreateMeetView: View {
         }
         .sheet(isPresented: $showImagePicker) {
             ImagePicker(image: $viewModel.selectedImage)
+        }
+        .sheet(isPresented: $showLocationSearch) {
+            LocationSearchView(
+                selectedLocation: $viewModel.selectedLocation,
+                locationName: $viewModel.locationName
+            )
         }
     }
 }
