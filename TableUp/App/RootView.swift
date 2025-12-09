@@ -11,10 +11,13 @@ struct RootView: View {
     @StateObject private var authService = AuthService.shared
     @StateObject private var locationService = LocationService.shared
     @State private var isProfileSetupComplete = false
+    @State private var isCheckingProfile = true
 
     var body: some View {
         ZStack {
-            if authService.isAuthenticated {
+            if isCheckingProfile {
+                ProgressView()
+            } else if authService.isAuthenticated {
                 if isProfileSetupComplete {
                     MainTabView()
                 } else {
@@ -25,14 +28,28 @@ struct RootView: View {
             }
         }
         .onAppear {
-            // Request location permission
             locationService.requestPermission()
-
-            // Request notification permission
             Task {
                 await NotificationService.shared.requestPermission()
+                await checkProfile()
             }
         }
+    }
+    
+    private func checkProfile() async {
+        guard let userId = authService.currentUser?.uid else {
+            isCheckingProfile = false
+            return
+        }
+        
+        do {
+            let user = try await FirestoreService.shared.fetchUser(userId)
+            isProfileSetupComplete = user != nil
+        } catch {
+            isProfileSetupComplete = false
+        }
+        
+        isCheckingProfile = false
     }
 }
 

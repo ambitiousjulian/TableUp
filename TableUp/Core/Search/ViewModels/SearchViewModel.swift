@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 @MainActor
 class SearchViewModel: ObservableObject {
@@ -16,6 +17,7 @@ class SearchViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     private let firestoreService = FirestoreService.shared
+    private let db = Firestore.firestore()  
 
     func performSearch() async {
         guard !searchQuery.isEmpty else {
@@ -23,15 +25,31 @@ class SearchViewModel: ObservableObject {
             groups = []
             return
         }
-
+        
         isLoading = true
-        errorMessage = nil
-
-        // TODO: Implement actual search functionality
-        // For now, just clear results
-        meets = []
-        groups = []
-
+        
+        do {
+            // Search meets
+            let meetsSnapshot = try await db.collection("meets")
+                .whereField("title", isGreaterThanOrEqualTo: searchQuery)
+                .whereField("title", isLessThan: searchQuery + "\u{f8ff}")
+                .limit(to: 20)
+                .getDocuments()
+            
+            meets = try meetsSnapshot.documents.compactMap { try $0.data(as: Meet.self) }
+            
+            // Search groups
+            let groupsSnapshot = try await db.collection("groups")
+                .whereField("name", isGreaterThanOrEqualTo: searchQuery)
+                .whereField("name", isLessThan: searchQuery + "\u{f8ff}")
+                .limit(to: 20)
+                .getDocuments()
+            
+            groups = try groupsSnapshot.documents.compactMap { try $0.data(as: Group.self) }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        
         isLoading = false
     }
 }

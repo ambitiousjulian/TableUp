@@ -48,12 +48,22 @@ class FirestoreService {
     }
 
     func fetchNearbyMeets(location: CLLocationCoordinate2D, radiusKm: Double = 10) async throws -> [Meet] {
-        // TODO: Implement geohash query
-        // For now, return all meets (this should be replaced with proper geohash query)
+        // Get all upcoming meets
         let snapshot = try await db.collection("meets")
-            .limit(to: 50)
+            .whereField("startTime", isGreaterThan: Date())
+            .limit(to: 100)
             .getDocuments()
-        return try snapshot.documents.compactMap { try $0.data(as: Meet.self) }
+        
+        let allMeets = try snapshot.documents.compactMap { try? $0.data(as: Meet.self) }
+        
+        // Filter by distance client-side
+        let userLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+        
+        return allMeets.filter { meet in
+            let meetLocation = CLLocation(latitude: meet.location.latitude, longitude: meet.location.longitude)
+            let distance = userLocation.distance(from: meetLocation)
+            return distance <= radiusKm * 1000 // Convert km to meters
+        }
     }
 
     func listenToMeet(_ meetId: String, completion: @escaping (Result<Meet, Error>) -> Void) -> ListenerRegistration {
@@ -153,5 +163,14 @@ class FirestoreService {
                     completion(.failure(error))
                 }
             }
+    }
+    func leaveGroup(groupId: String, userId: String) async throws {
+        try await db.collection("groups").document(groupId)
+            .collection("members").document(userId).delete()
+
+        // Update member count
+        try await db.collection("groups").document(groupId).updateData([
+            "memberCount": FieldValue.increment(Int64(-1))
+        ])
     }
 }

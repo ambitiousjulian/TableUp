@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B96B15CB2EE7C1A70014F1A5 /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96B15CA2EE7C1A70014F1A5 /* GroupDetailView.swift */; };
+		B96B15CD2EE7C1C30014F1A5 /* GroupDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96B15CC2EE7C1C30014F1A5 /* GroupDetailViewModel.swift */; };
 		B9AE31582EE6817200AA79F9 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE31082EE6817200AA79F9 /* AnalyticsService.swift */; };
 		B9AE31592EE6817200AA79F9 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE31092EE6817200AA79F9 /* AuthService.swift */; };
 		B9AE315A2EE6817200AA79F9 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE310A2EE6817200AA79F9 /* FirestoreService.swift */; };
@@ -68,6 +70,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B96B15CA2EE7C1A70014F1A5 /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
+		B96B15CC2EE7C1C30014F1A5 /* GroupDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailViewModel.swift; sourceTree = "<group>"; };
 		B9AE31082EE6817200AA79F9 /* AnalyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		B9AE31092EE6817200AA79F9 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		B9AE310A2EE6817200AA79F9 /* FirestoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
@@ -258,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				B9AE31352EE6817200AA79F9 /* GroupsViewModel.swift */,
+				B96B15CC2EE7C1C30014F1A5 /* GroupDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -266,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				B9AE31372EE6817200AA79F9 /* GroupsView.swift */,
+				B96B15CA2EE7C1A70014F1A5 /* GroupDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -559,9 +565,11 @@
 				B9AE31682EE6817200AA79F9 /* RootView.swift in Sources */,
 				B9AE316E2EE6817200AA79F9 /* User.swift in Sources */,
 				B9AE317C2EE6817200AA79F9 /* GroupsView.swift in Sources */,
+				B96B15CD2EE7C1C30014F1A5 /* GroupDetailViewModel.swift in Sources */,
 				B9AE317A2EE6817200AA79F9 /* SignInView.swift in Sources */,
 				B9AE31712EE6817200AA79F9 /* Date+Extensions.swift in Sources */,
 				B9AE31772EE6817200AA79F9 /* ProfileSetupViewModel.swift in Sources */,
+				B96B15CB2EE7C1A70014F1A5 /* GroupDetailView.swift in Sources */,
 				B9AE315A2EE6817200AA79F9 /* FirestoreService.swift in Sources */,
 				B9AE31862EE6817200AA79F9 /* ProfileView.swift in Sources */,
 				B9AE316F2EE6817200AA79F9 /* Venue.swift in Sources */,

@@ -30,9 +30,7 @@ struct GroupsView: View {
                     ScrollView {
                         VStack(spacing: 12) {
                             ForEach(viewModel.groups) { group in
-                                GroupCard(group: group) {
-                                    // Navigate to group detail
-                                }
+                                GroupCard(group: group)
                             }
                         }
                         .padding(.vertical, 16)

@@ -9,9 +9,19 @@ import SwiftUI
 
 struct MeetCard: View {
     let meet: Meet
-    let onJoin: () -> Void
 
     var body: some View {
+        if let meetId = meet.id {
+            NavigationLink(destination: MeetDetailView(meetId: meetId)) {
+                cardContent
+            }
+            .buttonStyle(PlainButtonStyle())
+        } else {
+            cardContent
+        }
+    }
+    
+    private var cardContent: some View {
         VStack(alignment: .leading, spacing: 12) {
             // Header with time and category
             HStack {
@@ -44,26 +54,12 @@ struct MeetCard: View {
                     .lineLimit(1)
             }
 
-            // Attendees and action
-            HStack {
-                HStack(spacing: 4) {
-                    Image(systemName: "person.2.fill")
-                        .foregroundColor(.textSecondary)
-                    Text("\(meet.attendeeCount)/\(meet.capacity)")
-                        .captionStyle()
-                }
-
-                Spacer()
-
-                Button(action: onJoin) {
-                    Text("Join")
-                        .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 8)
-                        .background(Color.primaryPurple)
-                        .cornerRadius(20)
-                }
+            // Attendees
+            HStack(spacing: 4) {
+                Image(systemName: "person.2.fill")
+                    .foregroundColor(.textSecondary)
+                Text("\(meet.attendeeCount)/\(meet.capacity)")
+                    .captionStyle()
             }
         }
         .padding()

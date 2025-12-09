@@ -34,12 +34,7 @@ struct MeetFeedView: View {
                             if !viewModel.nowMeets.isEmpty {
                                 MeetSection(
                                     title: "Happening Now",
-                                    meets: viewModel.nowMeets,
-                                    onJoin: { meet in
-                                        Task {
-                                            await viewModel.joinMeet(meet)
-                                        }
-                                    }
+                                    meets: viewModel.nowMeets
                                 )
                             }
 
@@ -47,12 +42,7 @@ struct MeetFeedView: View {
                             if !viewModel.todayMeets.isEmpty {
                                 MeetSection(
                                     title: "Today",
-                                    meets: viewModel.todayMeets,
-                                    onJoin: { meet in
-                                        Task {
-                                            await viewModel.joinMeet(meet)
-                                        }
-                                    }
+                                    meets: viewModel.todayMeets
                                 )
                             }
 
@@ -60,12 +50,7 @@ struct MeetFeedView: View {
                             if !viewModel.thisWeekMeets.isEmpty {
                                 MeetSection(
                                     title: "This Week",
-                                    meets: viewModel.thisWeekMeets,
-                                    onJoin: { meet in
-                                        Task {
-                                            await viewModel.joinMeet(meet)
-                                        }
-                                    }
+                                    meets: viewModel.thisWeekMeets
                                 )
                             }
                         }
@@ -87,7 +72,6 @@ struct MeetFeedView: View {
 struct MeetSection: View {
     let title: String
     let meets: [Meet]
-    let onJoin: (Meet) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -97,10 +81,8 @@ struct MeetSection: View {
                 .padding(.horizontal, 16)
 
             ForEach(meets) { meet in
-                MeetCard(meet: meet) {
-                    onJoin(meet)
-                }
-                .padding(.horizontal, 16)
+                MeetCard(meet: meet)
+                    .padding(.horizontal, 16)
             }
         }
     }

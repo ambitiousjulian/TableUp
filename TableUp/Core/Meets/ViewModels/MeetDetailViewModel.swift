@@ -18,6 +18,7 @@ class MeetDetailViewModel: ObservableObject {
 
     private let firestoreService = FirestoreService.shared
     private let authService = AuthService.shared
+    private let db = Firestore.firestore()  // ADD THIS LINE
     private var listener: ListenerRegistration?
 
     func loadMeet(meetId: String) {
@@ -38,9 +39,18 @@ class MeetDetailViewModel: ObservableObject {
 
     private func checkIfAttending(meetId: String) async {
         guard let userId = authService.currentUser?.uid else { return }
-        // TODO: Check if user is attending
-        // For now, just set to false
-        isAttending = false
+        
+        do {
+            let snapshot = try await db.collection("meets")
+                .document(meetId)
+                .collection("attendees")
+                .document(userId)
+                .getDocument()
+            
+            isAttending = snapshot.exists
+        } catch {
+            isAttending = false
+        }
     }
 
     func joinMeet() async {

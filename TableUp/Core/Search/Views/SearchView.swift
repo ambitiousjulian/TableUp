@@ -62,10 +62,8 @@ struct SearchView: View {
                                             .padding(.horizontal, 16)
 
                                         ForEach(viewModel.meets) { meet in
-                                            MeetCard(meet: meet) {
-                                                // Join action
-                                            }
-                                            .padding(.horizontal, 16)
+                                            MeetCard(meet: meet)
+                                                .padding(.horizontal, 16)
                                         }
                                     }
                                 }
@@ -78,11 +76,9 @@ struct SearchView: View {
                                             .padding(.horizontal, 16)
 
                                         ForEach(viewModel.groups) { group in
-                                            GroupCard(group: group) {
-                                                // Navigate to group detail
-                                            }
-                                        }
-                                    }
+                                            GroupCard(group: group)
+                                                .padding(.horizontal, 16)
+                                        }                                    }
                                 }
 
                                 // No results
