@@ -119,5 +119,6 @@ struct MeetDetailView: View {
         .onAppear {
             viewModel.loadMeet(meetId: meetId)
         }
+        .toast($viewModel.toast)
     }
 }

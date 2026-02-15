@@ -73,7 +73,14 @@ class CreateMeetViewModel: ObservableObject {
                 geohash: geohash
             )
 
-            _ = try await firestoreService.createMeet(meet)
+            let meetId = try await firestoreService.createMeet(meet)
+
+            // Notify other views
+            NotificationCenter.default.post(
+                name: .meetCreated,
+                object: nil,
+                userInfo: [NotificationKeys.meetId: meetId]
+            )
 
             isLoading = false
             return true

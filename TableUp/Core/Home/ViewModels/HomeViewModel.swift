@@ -23,8 +23,51 @@ class HomeViewModel: ObservableObject {
 
     private let firestoreService = FirestoreService.shared
     private let locationService = LocationService.shared
+    private var notificationObservers: [NSObjectProtocol] = []
 
     let filters = ["All", "Tech", "Social", "Fitness", "Food", "Outdoors"]
+
+    init() {
+        setupNotifications()
+    }
+
+    deinit {
+        notificationObservers.forEach { NotificationCenter.default.removeObserver($0) }
+    }
+
+    private func setupNotifications() {
+        let observer1 = NotificationCenter.default.addObserver(
+            forName: .meetCreated,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                await self?.loadNearbyMeets()
+            }
+        }
+
+        let observer2 = NotificationCenter.default.addObserver(
+            forName: .userJoinedMeet,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                await self?.loadNearbyMeets()
+            }
+        }
+
+        let observer3 = NotificationCenter.default.addObserver(
+            forName: .userLeftMeet,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                await self?.loadNearbyMeets()
+            }
+        }
+
+        notificationObservers = [observer1, observer2, observer3]
+    }
 
     func loadNearbyMeets() async {
         guard let location = locationService.currentLocation else {
