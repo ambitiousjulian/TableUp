@@ -1,8 +1,10 @@
-# Xcode
-xcuserdata/
+# Xcode - AGGRESSIVE
+**/xcuserdata/
 *.xcuserstate
 *.xcworkspace/xcuserdata/
-project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+*.xcworkspace/xcshareddata/swiftpm/
+project.xcworkspace/xcshareddata/
+.swiftpm/
 
 # Build
 build/
@@ -12,8 +14,8 @@ DerivedData/
 *.dSYM
 
 # Swift Package Manager
-.swiftpm/
 .build/
+Package.resolved
 
 # CocoaPods
 Pods/
