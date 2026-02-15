@@ -52,6 +52,9 @@ struct GroupsView: View {
                     await viewModel.loadGroups()
                 }
             }
+            .sheet(isPresented: $showCreateGroup) {
+                CreateGroupView()
+            }
         }
     }
 }

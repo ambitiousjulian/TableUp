@@ -33,11 +33,6 @@ class CreateMeetViewModel: ObservableObject {
         !title.isEmpty && !locationName.isEmpty && selectedLocation != nil && !selectedTags.isEmpty
     }
 
-    init() {
-        // Set default location to user's current location
-        selectedLocation = locationService.currentLocation
-    }
-
     func createMeet() async -> Bool {
         guard let userId = authService.currentUser?.uid,
               let location = selectedLocation else {
