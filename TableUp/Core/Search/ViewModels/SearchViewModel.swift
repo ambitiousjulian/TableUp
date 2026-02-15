@@ -25,31 +25,23 @@ class SearchViewModel: ObservableObject {
             groups = []
             return
         }
-        
+
         isLoading = true
-        
+        errorMessage = nil
+
         do {
-            // Search meets
-            let meetsSnapshot = try await db.collection("meets")
-                .whereField("title", isGreaterThanOrEqualTo: searchQuery)
-                .whereField("title", isLessThan: searchQuery + "\u{f8ff}")
-                .limit(to: 20)
-                .getDocuments()
-            
-            meets = try meetsSnapshot.documents.compactMap { try $0.data(as: Meet.self) }
-            
-            // Search groups
-            let groupsSnapshot = try await db.collection("groups")
-                .whereField("name", isGreaterThanOrEqualTo: searchQuery)
-                .whereField("name", isLessThan: searchQuery + "\u{f8ff}")
-                .limit(to: 20)
-                .getDocuments()
-            
-            groups = try groupsSnapshot.documents.compactMap { try $0.data(as: Group.self) }
+            // Use improved search methods with client-side filtering
+            async let meetsResult = firestoreService.searchMeets(query: searchQuery)
+            async let groupsResult = firestoreService.searchGroups(query: searchQuery)
+
+            meets = try await meetsResult
+            groups = try await groupsResult
         } catch {
             errorMessage = error.localizedDescription
+            meets = []
+            groups = []
         }
-        
+
         isLoading = false
     }
 }
