@@ -21,6 +21,8 @@
 		B9AE31612EE6817200AA79F9 /* MeetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE31122EE6817200AA79F9 /* MeetCard.swift */; };
 		B9AE31622EE6817200AA79F9 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE31132EE6817200AA79F9 /* PrimaryButton.swift */; };
 		B9AE31632EE6817200AA79F9 /* UserAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE31142EE6817200AA79F9 /* UserAvatar.swift */; };
+		B9TOAST22EE6817200AA79F9 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9TOAST12EE6817200AA79F9 /* ToastView.swift */; };
+		B9APPNO22EE6817200AA79F9 /* AppNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9APPNOT2EE6817200AA79F9 /* AppNotifications.swift */; };
 		B9AE31652EE6817200AA79F9 /* README_SETUP.md in Resources */ = {isa = PBXBuildFile; fileRef = B9AE31172EE6817200AA79F9 /* README_SETUP.md */; };
 		B9AE31672EE6817200AA79F9 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE311A2EE6817200AA79F9 /* MainTabView.swift */; };
 		B9AE31682EE6817200AA79F9 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9AE311B2EE6817200AA79F9 /* RootView.swift */; };
@@ -84,6 +86,8 @@
 		B9AE31122EE6817200AA79F9 /* MeetCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetCard.swift; sourceTree = "<group>"; };
 		B9AE31132EE6817200AA79F9 /* PrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		B9AE31142EE6817200AA79F9 /* UserAvatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAvatar.swift; sourceTree = "<group>"; };
+		B9TOAST12EE6817200AA79F9 /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		B9APPNOT2EE6817200AA79F9 /* AppNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifications.swift; sourceTree = "<group>"; };
 		B9AE31162EE6817200AA79F9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9AE31172EE6817200AA79F9 /* README_SETUP.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README_SETUP.md; sourceTree = "<group>"; };
 		B9AE311A2EE6817200AA79F9 /* MainTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -168,6 +172,7 @@
 				B9AE31122EE6817200AA79F9 /* MeetCard.swift */,
 				B9AE31132EE6817200AA79F9 /* PrimaryButton.swift */,
 				B9AE31142EE6817200AA79F9 /* UserAvatar.swift */,
+				B9TOAST12EE6817200AA79F9 /* ToastView.swift */,
 			);
 			name = Components;
 			path = TableUp/Components;
@@ -223,6 +228,7 @@
 			children = (
 				B9AE31282EE6817200AA79F9 /* Extensions */,
 				B9AE31292EE6817200AA79F9 /* Constants.swift */,
+				B9APPNOT2EE6817200AA79F9 /* AppNotifications.swift */,
 				B9AE312A2EE6817200AA79F9 /* GeoHashHelper.swift */,
 				B9AE312B2EE6817200AA79F9 /* ImagePicker.swift */,
 			);
@@ -576,6 +582,8 @@
 				B9AE316B2EE6817200AA79F9 /* Meet.swift in Sources */,
 				B9AE317F2EE6817200AA79F9 /* MeetFeedViewModel.swift in Sources */,
 				B9AE31632EE6817200AA79F9 /* UserAvatar.swift in Sources */,
+				B9TOAST22EE6817200AA79F9 /* ToastView.swift in Sources */,
+				B9APPNO22EE6817200AA79F9 /* AppNotifications.swift in Sources */,
 				B9AE317E2EE6817200AA79F9 /* HomeMapView.swift in Sources */,
 				B9AE315E2EE6817200AA79F9 /* GroupCard.swift in Sources */,
 				B9AE317D2EE6817200AA79F9 /* HomeViewModel.swift in Sources */,
