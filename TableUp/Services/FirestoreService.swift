@@ -36,6 +36,11 @@ class FirestoreService {
         try db.collection("users").document(userId).setData(from: user, merge: true)
     }
 
+    func checkUserExists(_ userId: String) async throws -> Bool {
+        let document = try await db.collection("users").document(userId).getDocument()
+        return document.exists
+    }
+
     // MARK: - Meets
     func createMeet(_ meet: Meet) async throws -> String {
         let ref = try db.collection("meets").addDocument(from: meet)
@@ -107,6 +112,33 @@ class FirestoreService {
         ])
     }
 
+    func checkIfAttending(meetId: String, userId: String) async throws -> Bool {
+        let document = try await db.collection("meets")
+            .document(meetId)
+            .collection("attendees")
+            .document(userId)
+            .getDocument()
+        return document.exists
+    }
+
+    func searchMeets(query: String) async throws -> [Meet] {
+        guard !query.isEmpty else { return [] }
+
+        let lowercasedQuery = query.lowercased()
+        let snapshot = try await db.collection("meets")
+            .whereField("startTime", isGreaterThan: Date())
+            .limit(to: 50)
+            .getDocuments()
+
+        let allMeets = try snapshot.documents.compactMap { try? $0.data(as: Meet.self) }
+
+        // Filter by title or tags containing query (client-side for now)
+        return allMeets.filter { meet in
+            meet.title.lowercased().contains(lowercasedQuery) ||
+            meet.tags.contains { $0.lowercased().contains(lowercasedQuery) }
+        }
+    }
+
     // MARK: - Groups
     func createGroup(_ group: Group) async throws -> String {
         let ref = try db.collection("groups").addDocument(from: group)
@@ -172,5 +204,23 @@ class FirestoreService {
         try await db.collection("groups").document(groupId).updateData([
             "memberCount": FieldValue.increment(Int64(-1))
         ])
+    }
+
+    func searchGroups(query: String) async throws -> [Group] {
+        guard !query.isEmpty else { return [] }
+
+        let lowercasedQuery = query.lowercased()
+        let snapshot = try await db.collection("groups")
+            .limit(to: 50)
+            .getDocuments()
+
+        let allGroups = try snapshot.documents.compactMap { try? $0.data(as: Group.self) }
+
+        // Filter by name or description containing query (client-side for now)
+        return allGroups.filter { group in
+            group.name.lowercased().contains(lowercasedQuery) ||
+            group.description.lowercased().contains(lowercasedQuery) ||
+            group.tags.contains { $0.lowercased().contains(lowercasedQuery) }
+        }
     }
 }
