@@ -31,8 +31,9 @@ class GroupsViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                await self?.loadGroups(showLoading: false)
+                await self.loadGroups(showLoading: false)
             }
         }
 
@@ -41,8 +42,9 @@ class GroupsViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                await self?.loadGroups(showLoading: false)
+                await self.loadGroups(showLoading: false)
             }
         }
 
@@ -51,13 +53,15 @@ class GroupsViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                await self?.loadGroups(showLoading: false)
+                await self.loadGroups(showLoading: false)
             }
         }
 
         notificationObservers = [observer1, observer2, observer3]
     }
+
 
     func loadGroups(showLoading: Bool = true) async {
         if showLoading {

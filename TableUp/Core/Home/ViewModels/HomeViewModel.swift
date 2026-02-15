@@ -41,8 +41,9 @@ class HomeViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                await self?.loadNearbyMeets()
+                await self.loadNearbyMeets()
             }
         }
 
@@ -51,8 +52,9 @@ class HomeViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                await self?.loadNearbyMeets()
+                await self.loadNearbyMeets()
             }
         }
 
@@ -61,13 +63,15 @@ class HomeViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                await self?.loadNearbyMeets()
+                await self.loadNearbyMeets()
             }
         }
 
         notificationObservers = [observer1, observer2, observer3]
     }
+
 
     func loadNearbyMeets() async {
         guard let location = locationService.currentLocation else {

@@ -32,8 +32,9 @@ class MeetFeedViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                await self?.loadMeets(showLoading: false)
+                await self.loadMeets(showLoading: false)
             }
         }
 
@@ -42,8 +43,9 @@ class MeetFeedViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                await self?.loadMeets(showLoading: false)
+                await self.loadMeets(showLoading: false)
             }
         }
 
@@ -52,13 +54,15 @@ class MeetFeedViewModel: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
+            guard let self = self else { return }
             Task { @MainActor in
-                await self?.loadMeets(showLoading: false)
+                await self.loadMeets(showLoading: false)
             }
         }
 
         notificationObservers = [observer1, observer2, observer3]
     }
+
 
     var nowMeets: [Meet] {
         meets.filter { meet in
