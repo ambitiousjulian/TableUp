@@ -56,14 +56,15 @@ struct MeetFeedView: View {
                         }
                         .padding(.vertical, 16)
                     }
+                    .refreshable {
+                        await viewModel.refresh()
+                    }
                 }
             }
             .navigationTitle("Meets")
             .navigationBarTitleDisplayMode(.large)
-            .onAppear {
-                Task {
-                    await viewModel.loadMeets()
-                }
+            .task {
+                await viewModel.loadMeets()
             }
         }
     }

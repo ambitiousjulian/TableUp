@@ -67,5 +67,6 @@ struct GroupDetailView: View {
         .onAppear {
             viewModel.loadGroup(groupId: groupId)
         }
+        .toast($viewModel.toast)
     }
 }

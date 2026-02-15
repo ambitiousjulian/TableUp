@@ -12,11 +12,57 @@ class GroupsViewModel: ObservableObject {
     @Published var groups: [Group] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var isRefreshing = false
 
     private let firestoreService = FirestoreService.shared
+    private var notificationObservers: [NSObjectProtocol] = []
 
-    func loadGroups() async {
-        isLoading = true
+    init() {
+        setupNotifications()
+    }
+
+    deinit {
+        notificationObservers.forEach { NotificationCenter.default.removeObserver($0) }
+    }
+
+    private func setupNotifications() {
+        let observer1 = NotificationCenter.default.addObserver(
+            forName: .userJoinedGroup,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                await self?.loadGroups(showLoading: false)
+            }
+        }
+
+        let observer2 = NotificationCenter.default.addObserver(
+            forName: .userLeftGroup,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                await self?.loadGroups(showLoading: false)
+            }
+        }
+
+        let observer3 = NotificationCenter.default.addObserver(
+            forName: .groupCreated,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                await self?.loadGroups(showLoading: false)
+            }
+        }
+
+        notificationObservers = [observer1, observer2, observer3]
+    }
+
+    func loadGroups(showLoading: Bool = true) async {
+        if showLoading {
+            isLoading = true
+        }
         errorMessage = nil
 
         do {
@@ -26,6 +72,12 @@ class GroupsViewModel: ObservableObject {
         }
 
         isLoading = false
+        isRefreshing = false
+    }
+
+    func refresh() async {
+        isRefreshing = true
+        await loadGroups(showLoading: false)
     }
 
     func joinGroup(_ group: Group) async {
@@ -34,7 +86,7 @@ class GroupsViewModel: ObservableObject {
 
         do {
             try await firestoreService.joinGroup(groupId: groupId, userId: userId)
-            await loadGroups() // Refresh
+            await loadGroups(showLoading: false) // Refresh
         } catch {
             errorMessage = error.localizedDescription
         }

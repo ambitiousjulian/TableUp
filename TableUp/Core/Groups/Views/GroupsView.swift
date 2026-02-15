@@ -35,6 +35,9 @@ struct GroupsView: View {
                         }
                         .padding(.vertical, 16)
                     }
+                    .refreshable {
+                        await viewModel.refresh()
+                    }
                 }
             }
             .navigationTitle("Groups")
@@ -47,10 +50,8 @@ struct GroupsView: View {
                     }
                 }
             }
-            .onAppear {
-                Task {
-                    await viewModel.loadGroups()
-                }
+            .task {
+                await viewModel.loadGroups()
             }
         }
     }
